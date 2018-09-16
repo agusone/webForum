@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\forum;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use auth;
+
 class ForumController extends Controller
 {
     /**
@@ -14,7 +15,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -36,10 +37,21 @@ class ForumController extends Controller
     public function store(Request $request)
     {
         $forums = new forum;
-        $forums ->user_id = auth::user()->id;
-        $forums ->title = $request ->title;
-        $forums ->slug = str_slug($request->title);
-        $forums ->description = $request ->description;
+        $forums->user_id = Auth::user()->id;
+        $forums->title = $request ->title;
+        $forums->slug = str_slug($request->title);
+        $forums->description = $request->description;
+        if ($request->file('image')){
+            $file = $request->file('image');
+            $filename = time().'.'.$file->getClientOriginalExtension();
+            $location = public_path('/images');
+            $file->move($location, $filename);
+            $forums->image = $filename;
+        }
+
+       $forums->save();
+
+        return back();
      }
 
     /**

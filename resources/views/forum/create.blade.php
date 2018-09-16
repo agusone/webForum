@@ -8,15 +8,19 @@
                 <div class="card-header text-center">CREATE THREAD</div>
 
                 <div class="card-body">
-                    <form action="{{Route('forum/store')}}" mothod="post" enctype="multipart/form-data">
+                    <form action="{{Route('forum.store')}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                         <div class="form-group">
                              <input type="text" name="title" class="form-control" placeholder="title.." >
                          </div>
 
                          <div class="form-group">
-                             <input type="text" name="Descriptipn" class="form-control" placeholder="Description.." >
+                             <input type="text" name="description" class="form-control" placeholder="Description.." >
                          </div>
+                         <div class="form-group">
+                             <input type="file" name="image" class="form-control" >
+                         </div>
+ 
  
                             <button type="submit" class="btn btn-dark btn-block" > Post! </button>
                     </form>
@@ -26,3 +30,4 @@
     </div>
 </div>
 @endsection
+
