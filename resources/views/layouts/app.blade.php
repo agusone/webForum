@@ -34,12 +34,28 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('Forum') }}</a>
+                            </li>
 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                            <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>  Menu <span class="caret"></span>
+                                         </a> 
+                                        <div class="dropdown-menu"  aria-labelledby="navbarDropdown"> 
+                                            <a class="dropdown-item" href="{{ route('forum.create') }}" style="color: #444;">
+                                        {{ __('Buat Pertanyaan') }}
+                                            </a> 
+                                            <a class="dropdown-item" href="{{ route('home') }}" style="color: #444;">
+                                        {{ __('Forum ') }}
+                                            </a> 
+                                </div>
+                            </li>
+
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -60,6 +76,8 @@
                                         {{ __('Logout') }}
                                     </a>
 
+                                    
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -75,5 +93,8 @@
             @yield('content')
         </main>
     </div>
+   
+    @yield('js')
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
 </body>
 </html>

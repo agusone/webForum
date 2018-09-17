@@ -15,6 +15,8 @@ class ForumController extends Controller
      */
     public function index()
     {
+         
+        return view('home' );
         
     }
 
@@ -25,7 +27,8 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view('forum.create');
+         
+        return view('forum.create' );
     }
 
     /**
@@ -36,6 +39,7 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
+        
         $forums = new forum;
         $forums->user_id = Auth::user()->id;
         $forums->title = $request ->title;
@@ -71,9 +75,10 @@ class ForumController extends Controller
      * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function edit(forum $forum)
+    public function edit($id)
     {
-        //
+        $forum = forum::find($id);
+        return view('forum.edit',compact('forum'));
     }
 
     /**
@@ -83,9 +88,31 @@ class ForumController extends Controller
      * @param  \App\forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, forum $forum)
+    public function update(Request $request, $id)
     {
-        //
+        {
+            $forums = Forum::find($id);
+            $forums->user_id = Auth::user()->id;
+            $forums->title = $request ->title;
+            $forums->slug = str_slug($request->title);
+            $forums->description = $request->description;
+            if ($request->file('image')){
+                $file = $request->file('image');
+                $filename = time().'.'.$file->getClientOriginalExtension();
+                $location = public_path('/images');
+                $file->move($location, $filename);
+
+                $oldimage = $forums -> image;
+                \Storage::delete($oldimage);
+
+                $forums->image = $filename;
+            }
+    
+           $forums->save();
+    
+            return back();
+         }
+    
     }
 
     /**

@@ -15,8 +15,10 @@
                          </div>
 
                          <div class="form-group">
-                             <input type="text" name="description" class="form-control" placeholder="Description.." >
+                             <textarea type="text" name="description" class="form-control" placeholder="Description.." > </textarea>
                          </div>
+                         
+
                          <div class="form-group">
                              <input type="file" name="image" class="form-control" >
                          </div>
@@ -30,4 +32,8 @@
     </div>
 </div>
 @endsection
-
+@section('js')
+<script>
+        CKEDITOR.replace( 'description' );
+</script>
+@endsection
